@@ -7,7 +7,7 @@
 import subprocess
 import time
 # from jax import jit
-import numba
+# import numba
 import psutil
 
 import random, string
@@ -41,24 +41,30 @@ def run_command(command):
 
 # @jit(nopython=True)
 def main(profileNo):
+    # Bing daily reword system
+
 
     for i in range(0,profileNo):
         if i != 0 :
             profile = "Profile " + str(i)
         else : 
-            profile = "Default "
+            profile = "Default"
         print(profile)
 
         searchText = randomword(32)
 
-        for j in range(len(searchText)-1,-1,-1):
+        command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/search?q=Quote+of+the+day&OCID=ML2BFU&PUBL=RewardsDO&PROGRAMNAME=QuoteOfTheDay&CREA=ML2BFU&FORM=ANSRW1  --profile-directory="{profile}"'  
+        run_command(command)
+
+        for j in range(len(searchText)-1,0,-1):
             query = searchText[0:j]
             print(j,"   ", query)
 
             command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/search?q={query}  --profile-directory="{profile}"'  
             run_command(command)
-            time.sleep(1.5)
+            # time.sleep(1)
             if (j % 7 == 0):
+                time.sleep(5)
                 close_edge_browser()
             time.sleep(2)
 
