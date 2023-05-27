@@ -10,21 +10,6 @@ import time
 # import numba
 import psutil
 
-import random, string
-
-def randomword(length):
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(length))
-
-# testing variable 
-''' 
-RandomText30 = "abcdefghijklmnopqrstuvwxyz123456"
-RandomText10 = "uhbueehjdeaw"
-ProfileIDs = ["Default","1","2","3","4","5","7","8","9","10","11","12","13","14","15"]
-'''
-
-
-
 
 def close_edge_browser():
     subprocess.run(["taskkill", "/im", "msedge.exe", "/f"])
@@ -41,20 +26,22 @@ def run_command(command):
 
 # @jit(nopython=True)
 def main(profileNo):
-    close_edge_browser()
-    searchText = randomword(32)
-    profile ="Profile " + str(profileNo - 1)
-    for j in range(len(searchText)-1,0,-1):
-        query = searchText[0:j]
-        print(j,"   ", query)
+    # Bing daily reword system
 
-        command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/search?q={query}  --profile-directory="{profile}"'  
+
+    for i in range(0,profileNo):
+        if i != 0 :
+            profile = "Profile " + str(i)
+        else : 
+            profile = "Default"
+        print(profile)
+
+        task = "https://www.bing.com/search?q=Quote+of+the+day&OCID=ML2BFU&PUBL=RewardsDO&PROGRAMNAME=QuoteOfTheDay&CREA=ML2BFU&FORM=ANNRW1"
+        command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" {task}  --profile-directory="{profile}"'  
         run_command(command)
-            # time.sleep(1)
-        if (j % 20== 0):
-            time.sleep(5)
-            close_edge_browser()
-        time.sleep(2)
+
+        time.sleep(5)
+        close_edge_browser()
 
 
 def clean_edge_cache():
@@ -67,7 +54,7 @@ def clean_edge_cache():
 
 
 if __name__ == "__main__":
-    profileNo = int(input("Profile No to search with : "))
+    profileNo = int(input("Number of profiles you have (include Default) : "))
     # skipProfile = input("If search is complete for any profile enter those profile no (coma separated or enter NA ) : ")
     main(profileNo)
 

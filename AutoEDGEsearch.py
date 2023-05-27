@@ -24,6 +24,8 @@ ProfileIDs = ["Default","1","2","3","4","5","7","8","9","10","11","12","13","14"
 '''
 
 
+search90 = [0,1,2,3,5,8,9,12,13,14,19]
+
 
 
 def close_edge_browser():
@@ -42,18 +44,23 @@ def run_command(command):
 # @jit(nopython=True)
 def main(profileNo):
     # Bing daily reword system
-
+    close_edge_browser()
 
     for i in range(0,profileNo):
+        if i in search90:
+            strlength = 35
+        else:
+            strlength = 12
         if i != 0 :
             profile = "Profile " + str(i)
         else : 
             profile = "Default"
         print(profile)
 
-        searchText = randomword(32)
 
-        command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/search?q=Quote+of+the+day&OCID=ML2BFU&PUBL=RewardsDO&PROGRAMNAME=QuoteOfTheDay&CREA=ML2BFU&FORM=ANSRW1  --profile-directory="{profile}"'  
+        searchText = randomword(strlength)
+
+        command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/spotlight/imagepuzzle?OCID=ML2BF0&PUBL=RewardsDO&PROGRAMNAME=BingDailyOfferIN&CREA=ML2BF0&FORM=ANSRW1  --profile-directory="{profile}"'  
         run_command(command)
 
         for j in range(len(searchText)-1,0,-1):
@@ -63,8 +70,10 @@ def main(profileNo):
             command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/search?q={query}  --profile-directory="{profile}"'  
             run_command(command)
             # time.sleep(1)
-            if (j % 7 == 0):
-                time.sleep(5)
+            if (j % 20 == 0):
+                time.sleep(7)
+                close_edge_browser()
+            elif(j==1):
                 close_edge_browser()
             time.sleep(2)
 
