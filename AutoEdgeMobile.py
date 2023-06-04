@@ -1,3 +1,8 @@
+#Shovan$Omail8085
+#Shovan$Gmail8085
+#shovanpaul48edge1@outlook.com
+
+
 import webbrowser
 import random, string
 import time
@@ -14,7 +19,7 @@ def randomword(length):
 
 
 def search_in_bing():
-    searchText = randomword(32)
+    searchText = randomword(27)
 
     for j in range(len(searchText)-1,0,-1):
         query = searchText[0:j]
@@ -23,10 +28,9 @@ def search_in_bing():
         formatted_search_text = query.replace(' ', '+')
         # Open the Bing browser and search for the given text
         webbrowser.open('https://www.bing.com/search?q=' + formatted_search_text)
-        time.sleep(4)
-        clear_browser_cache()
+        #time.sleep()
+        #clear_browser_cache()
 
 
-# Usage
-search_text = input('Enter search text: ')
+print("Auto Bing search mobile started ")
 search_in_bing()

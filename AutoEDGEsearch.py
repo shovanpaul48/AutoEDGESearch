@@ -24,13 +24,7 @@ ProfileIDs = ["Default","1","2","3","4","5","7","8","9","10","11","12","13","14"
 '''
 
 
-search90 = [0,1,2,3,5,8,9,12,13,14,19]
-
-
-
-def close_edge_browser():
-    subprocess.run(["taskkill", "/im", "msedge.exe", "/f"])
-
+# search90 = [0,1,2,3,4,5,6,7,8,9,11,12,13,14,19,22,23]
 
 
 # @jit(nopython=True)
@@ -44,24 +38,24 @@ def run_command(command):
 # @jit(nopython=True)
 def main(profileNo):
     # Bing daily reword system
-    close_edge_browser()
+    clean_edge_cache()
 
     for i in range(0,profileNo):
-        if i in search90:
-            strlength = 35
-        else:
-            strlength = 12
+        # if i in search90:
+        #     strlength = 35
+        # else:
+        #     strlength = 12
         if i != 0 :
             profile = "Profile " + str(i)
         else : 
             profile = "Default"
         print(profile)
 
-
+        strlength = 35
         searchText = randomword(strlength)
 
-        command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/spotlight/imagepuzzle?OCID=ML2BF0&PUBL=RewardsDO&PROGRAMNAME=BingDailyOfferIN&CREA=ML2BF0&FORM=ANSRW1  --profile-directory="{profile}"'  
-        run_command(command)
+        # command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/spotlight/imagepuzzle?OCID=ML2BF0&PUBL=RewardsDO&PROGRAMNAME=BingDailyOfferIN&CREA=ML2BF0&FORM=ANSRW1  --profile-directory="{profile}"'  
+        # run_command(command)
 
         for j in range(len(searchText)-1,0,-1):
             query = searchText[0:j]
@@ -70,22 +64,16 @@ def main(profileNo):
             command = f'start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://www.bing.com/search?q={query}  --profile-directory="{profile}"'  
             run_command(command)
             # time.sleep(1)
-            if (j % 20 == 0):
-                time.sleep(7)
-                close_edge_browser()
+            if (j % 18 == 0):
+                time.sleep(12)
+                clean_edge_cache()
             elif(j==1):
-                close_edge_browser()
-            time.sleep(2)
-
+                time.sleep(7)
+                clean_edge_cache()
+            time.sleep(0.5)
 
 def clean_edge_cache():
-    try:
-        # Execute the command to clear Edge cache
-        subprocess.run(['cmd', '/c', 'start', 'msedge', '--clear-achievements'], check=True)
-        print("Edge cache cleaned successfully.")
-    except subprocess.CalledProcessError as e:
-        print("Error occurred while cleaning Edge cache:", e)
-
+    run_command("taskkill /f /im msedge.exe")
 
 if __name__ == "__main__":
     profileNo = int(input("Number of profiles you have (include Default) : "))

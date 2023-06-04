@@ -16,18 +16,6 @@ def randomword(length):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(length))
 
-# testing variable 
-''' 
-RandomText30 = "abcdefghijklmnopqrstuvwxyz123456"
-RandomText10 = "uhbueehjdeaw"
-ProfileIDs = ["Default","1","2","3","4","5","7","8","9","10","11","12","13","14","15"]
-'''
-
-
-
-
-def close_edge_browser():
-    subprocess.run(["taskkill", "/im", "msedge.exe", "/f"])
 
 
 
@@ -41,9 +29,9 @@ def run_command(command):
 
 # @jit(nopython=True)
 def main(profileNo):
-    close_edge_browser()
-    searchText = randomword(32)
-    profile ="Profile " + str(profileNo - 1)
+    clean_edge_cache()
+    searchText = randomword(33)
+    profile ="Profile " + str(profileNo)
     for j in range(len(searchText)-1,0,-1):
         query = searchText[0:j]
         print(j,"   ", query)
@@ -53,19 +41,12 @@ def main(profileNo):
             # time.sleep(1)
         if (j % 20== 0):
             time.sleep(5)
-            close_edge_browser()
-        time.sleep(2)
-
+            clean_edge_cache()
+        time.sleep(1.5)
 
 def clean_edge_cache():
-    try:
-        # Execute the command to clear Edge cache
-        subprocess.run(['cmd', '/c', 'start', 'msedge', '--clear-achievements'], check=True)
-        print("Edge cache cleaned successfully.")
-    except subprocess.CalledProcessError as e:
-        print("Error occurred while cleaning Edge cache:", e)
-
-
+    run_command("taskkill /f /im msedge.exe")
+    
 if __name__ == "__main__":
     profileNo = int(input("Profile No to search with : "))
     # skipProfile = input("If search is complete for any profile enter those profile no (coma separated or enter NA ) : ")
